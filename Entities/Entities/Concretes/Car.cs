@@ -25,6 +25,9 @@ namespace Entities.Concretes
 
         // NoArgsConstructor
         // AllArgsConstructor
+
+        // ORM => Object Relation Mapping
+
         public Car()
         {
             Rentals = new HashSet<Rental>();

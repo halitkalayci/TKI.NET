@@ -13,6 +13,6 @@ namespace Entities.DTOs
         public string Plate { get; set; }
         public int Kilometer { get; set; }
         public int MinFindeksCreditRate { get; set; }
-        public string ColorName { get; set; }
+        public ColorForListingDto Color { get; set; }
     }
 }

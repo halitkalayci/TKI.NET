@@ -27,6 +27,8 @@ namespace WebAPI.Controllers
             // Response Status Codes
             //return StatusCode(401, "Merhaba");
             List<Car> cars = _carRepository.GetAll();
+
+            // Manual Mapping
             List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()
             {
                 Id = car.Id,
@@ -34,7 +36,11 @@ namespace WebAPI.Controllers
                 Kilometer = car.Kilometer,
                 MinFindeksCreditRate = car.MinFindeksCreditRate,
                 ModelYear = car.ModelYear,
-                ColorName = car.Color.Name
+                Color = new ColorForListingDto()
+                {
+                    Id= car.Color.Id,
+                    Name = car.Color.Name,
+                }
             }).ToList();
             return Ok(dtos);
         }
@@ -87,6 +93,6 @@ namespace WebAPI.Controllers
             return Ok("Araba silindi.");
         }
 
-        // Brand 
+       
     }
 }

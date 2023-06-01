@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using Core.Exceptions.Types;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
@@ -106,7 +107,7 @@ namespace Business.Concretes
         {
             Car carToDelete = _carRepository.GetById(id);
             if (carToDelete == null)
-                throw new Exception("Bu id ile bir araç bulunamadı.");
+                throw new BusinessException("Bu id ile bir araç bulunamadı.");
         }
         #endregion
     }

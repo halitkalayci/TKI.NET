@@ -1,6 +1,8 @@
 using Business;
 using Business.Abstracts;
 using Business.Concretes;
+using Core.Exceptions;
+using Core.Extensions;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
 using DataAccess.Concretes.EntityFramework.Contexts;
@@ -26,7 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionMiddleware>();
+//app.UseMiddleware<ExceptionMiddleware>();
+app.AddMiddlewaresFromCore();
 
 app.UseHttpsRedirection();
 

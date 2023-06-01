@@ -779,6 +779,10 @@
         }
       },
       "Core/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
         "runtime": {
           "Core.dll": {}
         }

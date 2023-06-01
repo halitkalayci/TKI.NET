@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Business
+namespace Core.Exceptions
 {
     public class ErrorDetails
     {

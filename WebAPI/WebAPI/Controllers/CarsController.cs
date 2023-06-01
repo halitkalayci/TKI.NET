@@ -15,6 +15,8 @@ namespace WebAPI.Controllers
         // CarForListing => DTO => ColorForListing
         // Request-Response Pattern
 
+        // Extension Method
+
         private readonly ICarService _carService;
 
         public CarsController(ICarService carService)

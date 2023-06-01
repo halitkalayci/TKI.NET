@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstracts;
+﻿using Business.Abstracts;
+using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,11 @@ namespace WebAPI.Controllers
         // CarForListing => DTO => ColorForListing
         // Request-Response Pattern
 
-        private readonly ICarRepository _carRepository;
+        private readonly ICarService _carService;
 
-        public CarsController(ICarRepository carRepository)
+        public CarsController(ICarService carService)
         {
-            _carRepository = carRepository;
+            _carService = carService;
         }
 
         [HttpGet]
@@ -26,70 +27,35 @@ namespace WebAPI.Controllers
         {
             // Response Status Codes
             //return StatusCode(401, "Merhaba");
-            List<Car> cars = _carRepository.GetAll();
-            //x
-            // Manual Mapping
-            List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()
-            {
-                Id = car.Id,
-                Plate = car.Plate,
-                Kilometer = car.Kilometer,
-                MinFindeksCreditRate = car.MinFindeksCreditRate,
-                ModelYear = car.ModelYear,
-                Color = new ColorForListingDto()
-                {
-                    Id= car.Color.Id,
-                    Name = car.Color.Name,
-                }
-            }).ToList();
-            return Ok(dtos);
+            return Ok(_carService.GetAll());
         }
+        // /api/cars => GetAll
+        // /api/cars/1 => GetById(1)
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            return Ok(_carService.GetById(id));
+        }
+
 
         [HttpPost]
         public IActionResult Add([FromBody] CarForAddDto carForAddDto)
         {
-            // Manual Mapleme
-            Car car = new Car()
-            {
-                Plate = carForAddDto.Plate,
-                Kilometer = carForAddDto.Kilometer,
-                IsAutomatic = carForAddDto.IsAutomatic,
-                ColorId = carForAddDto.ColorId,
-                ModelId = carForAddDto.ModelId,
-                MinFindeksCreditRate= carForAddDto.MinFindeksCreditRate,
-                ModelYear= carForAddDto.ModelYear,
-                CreatedDate = DateTime.UtcNow,
-                UpdatedDate = DateTime.UtcNow,
-                DeletedDate = DateTime.UtcNow,
-            };
-            _carRepository.Add(car);
+            _carService.Add(carForAddDto);
             return Ok();
         }
 
         [HttpPut]
         public IActionResult Update([FromBody] CarForUpdateDto carForUpdateDto)
         {
-            Car carToUpdate = _carRepository.GetById(carForUpdateDto.Id);
-            if (carToUpdate == null)
-                return BadRequest("Böyle bir araba bulunamadı.");
-
-            carToUpdate.Plate = carForUpdateDto.Plate;
-            carToUpdate.Kilometer = carForUpdateDto.Kilometer;
-            carToUpdate.ColorId = carForUpdateDto.ColorId;
-            carToUpdate.IsAutomatic = carForUpdateDto.IsAutomatic;
-            carToUpdate.ModelId = carForUpdateDto.ModelId;
-            carToUpdate.MinFindeksCreditRate = carForUpdateDto.MinFindeksCreditRate;
-            carToUpdate.ModelYear = carForUpdateDto.ModelYear;
-            carToUpdate.UpdatedDate = DateTime.UtcNow;
-
-            _carRepository.Update(carToUpdate);
-            return Ok(carToUpdate);
+            _carService.Update(carForUpdateDto);
+            return Ok();
         }
 
         [HttpDelete]
         public IActionResult Delete([FromQuery]int id)
         {
-            _carRepository.Delete(id);
+            _carService.Delete(id);
             return Ok("Araba silindi.");
         }
 

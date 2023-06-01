@@ -1,76 +1,113 @@
 ﻿using Business.Abstracts;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Entities.DTOs;
 
 namespace Business.Concretes
 {
     public class CarManager : ICarService
     {
-        // getter-only => sadece constructor içinde değiştirilebilir.
         private readonly ICarRepository _carRepository;
-        // Bir manager kendisiyle ilgili entity dışındaki 
-        // entitylerin repositorylerini enjekte edemez
-        private readonly IBrandService _brandService;
 
-
-        //private readonly IBrandRepository _brandRepository;
-
-        // DI => Dependency Injection
-        // IoC Container => Inversion Of Control
-        // constructor
-        // method overloading
-        public CarManager(ICarRepository carRepository, IBrandService brandService)
+        public CarManager(ICarRepository carRepository)
         {
             _carRepository = carRepository;
-            _brandService = brandService;
+        }
+
+        public void Add(CarForAddDto carForAddDto)
+        {
+            #region Business Rules
+            // Veritabanımda halihazırda mevcut bir plaka ile
+            // istek gelirse bu istek kabul edilmesin.
+            carWithSamePlateShouldNotExist(carForAddDto.Plate);
+            #endregion
+            #region Manual Mapping
+            Car car = new Car()
+            {
+                Plate = carForAddDto.Plate,
+                Kilometer = carForAddDto.Kilometer,
+                IsAutomatic = carForAddDto.IsAutomatic,
+                ColorId = carForAddDto.ColorId,
+                ModelId = carForAddDto.ModelId,
+                MinFindeksCreditRate = carForAddDto.MinFindeksCreditRate,
+                ModelYear = carForAddDto.ModelYear,
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow,
+                DeletedDate = DateTime.UtcNow,
+            };
+            #endregion
+            _carRepository.Add(car);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            // Verilen id ile veritabanına bir eşleşme olması.
+            carWithIdShouldExist(id);
+            _carRepository.Delete(id);
         }
 
-        public List<Car> GetAll()
+
+        public List<CarForListingDto> GetAll()
         {
-            throw new NotImplementedException();
+            List<Car> cars = _carRepository.GetAll();
+            List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()
+            {
+                Id = car.Id,
+                Plate = car.Plate,
+                Kilometer = car.Kilometer,
+                MinFindeksCreditRate = car.MinFindeksCreditRate,
+                ModelYear = car.ModelYear,
+                Color = new ColorForListingDto()
+                {
+                    Id = car.Color.Id,
+                    Name = car.Color.Name,
+                }
+            }).ToList();
+            return dtos;
         }
 
         public Car GetById(int id)
         {
-            throw new NotImplementedException();
-        }
-        public void Add(Car car)
-        {
-            // CCC => Cross Cutting Concerns
-            // Validation
-            // Business Rules 
-            // Aynı plakadan araç varsa bunu ekleme!
-            carShouldNotExistWithPlate(car.Plate);
-            _carRepository.Add(car);
-            Console.WriteLine("Araba eklendi.");
+            //TODO: DTO Implementation.
+            return _carRepository.GetById(id);
         }
 
+        public void Update(CarForUpdateDto carForUpdateDto)
+        {
+            carWithIdShouldExist(carForUpdateDto.Id);
+            //TODO => Plaka değiştiyse plakayı kontrol et
+            carWithSamePlateShouldNotExist(carForUpdateDto.Plate);
 
-        public void Update(Car car)
-        {
-            carShouldNotExistWithPlate(car.Plate);
-            throw new NotImplementedException();
+            Car carToUpdate = _carRepository.GetById(carForUpdateDto.Id);
+            carToUpdate.Plate = carForUpdateDto.Plate;
+            carToUpdate.Kilometer = carForUpdateDto.Kilometer;
+            carToUpdate.ColorId = carForUpdateDto.ColorId;
+            carToUpdate.IsAutomatic = carForUpdateDto.IsAutomatic;
+            carToUpdate.ModelId = carForUpdateDto.ModelId;
+            carToUpdate.MinFindeksCreditRate = carForUpdateDto.MinFindeksCreditRate;
+            carToUpdate.ModelYear = carForUpdateDto.ModelYear;
+            carToUpdate.UpdatedDate = DateTime.UtcNow;
+
+            _carRepository.Update(carToUpdate);
         }
-        // Global Exception Handling
-        // BusinessException(string message)
-        // message
-        private void carShouldNotExistWithPlate(string plate)
+
+        #region Business Rules
+
+        private void carWithSamePlateShouldNotExist(string plate)
         {
-            if (_carRepository.GetByPlate(plate) != null)
+            Car carWithSamePlate = _carRepository.GetByPlate(plate);
+            if (carWithSamePlate != null)
             {
-                Console.WriteLine("Bu plaka önceden eklenmiş");
-                //throw new Exception();
+                throw new Exception("Bu plaka ile bir araç zaten mevcut.");
             }
         }
 
-        private void brandShouldHaveLessThanFiveCars(int brandId)
+        private void carWithIdShouldExist(int id)
         {
-            Brand brand = _brandService.GetById(brandId);
+            Car carToDelete = _carRepository.GetById(id);
+            if (carToDelete == null)
+                throw new Exception("Bu id ile bir araç bulunamadı.");
         }
+        #endregion
     }
 }

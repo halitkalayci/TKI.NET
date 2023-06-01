@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DataAccess\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\..\Business\Business\Business.csproj" />
   </ItemGroup>
 
 </Project>

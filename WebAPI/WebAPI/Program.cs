@@ -1,3 +1,6 @@
+using Business;
+using Business.Abstracts;
+using Business.Concretes;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
 using DataAccess.Concretes.EntityFramework.Contexts;
@@ -13,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BaseDbContext>();
 builder.Services.AddSingleton<ICarRepository, EfCarRepository>();
+builder.Services.AddSingleton<ICarService, CarManager>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +26,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -29,3 +35,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+// Middleware => Geriye cevap dönme. Exception? 

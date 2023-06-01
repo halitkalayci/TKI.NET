@@ -1,18 +1,14 @@
 ﻿using Entities.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Entities.DTOs;
 
 namespace Business.Abstracts
 {
     public interface ICarService
     {
-        List<Car> GetAll();
+        List<CarForListingDto> GetAll();
         Car GetById(int id);
-        void Add(Car car);
-        void Update(Car car);
+        void Add(CarForAddDto car);
+        void Update(CarForUpdateDto car);
         void Delete(int id);
     }
 }

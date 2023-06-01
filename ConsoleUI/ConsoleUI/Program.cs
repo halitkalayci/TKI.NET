@@ -34,7 +34,6 @@ using Entities.Concretes;
 
 IBrandService brandService = new BrandManager(null);
 
-ICarService carService = new CarManager( new EfCarRepository(), brandService );
 
 //car.Plate = "34ABC06";
 //Car car2 = new() { Id = 2 };

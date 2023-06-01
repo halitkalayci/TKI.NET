@@ -91,3 +91,6 @@ C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Entities.dll
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\DataAccess.pdb
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Core.pdb
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Entities.pdb
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Business.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Business.pdb
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Newtonsoft.Json.dll

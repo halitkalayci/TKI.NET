@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             // Response Status Codes
             //return StatusCode(401, "Merhaba");
             List<Car> cars = _carRepository.GetAll();
-
+            //x
             // Manual Mapping
             List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()
             {

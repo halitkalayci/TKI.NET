@@ -1,7 +1,6 @@
 ﻿using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework.Contexts;
 using Entities.Concretes;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,58 +9,57 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concretes.EntityFramework
 {
-    public class EfCarRepository : ICarRepository
+    public class EfBrandRepository : IBrandRepository
     {
-        public void Add(Car car)
+        public void Add(Brand entity)
         {
-            // using scope
-            using (BaseDbContext context = new BaseDbContext())
+            using(BaseDbContext context = new BaseDbContext())
             {
-                context.Cars.Add(car);
+                // context.Add(entity);
+                context.Brands.Add(entity);
                 context.SaveChanges();
             }
         }
 
         public void Delete(int id)
         {
-            using(BaseDbContext context = new BaseDbContext())
+            using (BaseDbContext context = new BaseDbContext())
             {
-                Car car = GetById(id);
-                context.Cars.Remove(car);
+                Brand brandToDelete = GetById(id);
+                context.Remove(brandToDelete);
                 context.SaveChanges();
             }
         }
 
-        public List<Car> GetAll()
-        {
-            using(BaseDbContext context = new BaseDbContext())
-            {
-                // Include => JOIN
-                return context.Cars.Include(i=>i.Color).ToList();
-            }
-        }
-
-        public Car GetById(int id)
+        public List<Brand> GetAll()
         {
             using (BaseDbContext context = new BaseDbContext())
             {
-                return context.Cars.FirstOrDefault(i=>i.Id == id);
+                return context.Brands.ToList();
             }
         }
 
-        public Car GetByPlate(string plate)
+        public Brand GetById(int id)
         {
             using (BaseDbContext context = new BaseDbContext())
             {
-                return context.Cars.FirstOrDefault(i => i.Plate == plate);
+                return context.Brands.Where(i => i.Id == id).FirstOrDefault();
             }
         }
 
-        public void Update(Car car)
+        public Brand GetByName(string name)
         {
             using (BaseDbContext context = new BaseDbContext())
             {
-                context.Cars.Update(car);
+                return context.Brands.FirstOrDefault(i => i.Name == name);
+            }
+        }
+
+        public void Update(Brand entity)
+        {
+            using (BaseDbContext context = new BaseDbContext())
+            {
+                context.Update(entity);
                 context.SaveChanges();
             }
         }

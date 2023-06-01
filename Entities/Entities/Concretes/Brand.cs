@@ -15,6 +15,7 @@ namespace Entities.Concretes
         }
         // ? => Nullable
         public string Name { get; set; }
+        // Dosya olarak al, upload
         public string LogoUrl { get; set; }
         public ICollection<Model> Models { get; set; }
     }

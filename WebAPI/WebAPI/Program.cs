@@ -19,6 +19,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BaseDbContext>();
 builder.Services.AddSingleton<ICarRepository, EfCarRepository>();
 builder.Services.AddSingleton<ICarService, CarManager>();
+builder.Services.AddSingleton<IBrandService, BrandManager>();
+builder.Services.AddSingleton<IBrandRepository, EfBrandRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

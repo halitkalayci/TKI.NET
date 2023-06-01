@@ -1,7 +1,7 @@
 ﻿using Business.Abstracts;
 using DataAccess.Abstracts;
 using Entities.Concretes;
-using Entities.DTOs;
+using Entities.DTOs.Car;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

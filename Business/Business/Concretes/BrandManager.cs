@@ -1,6 +1,8 @@
 ﻿using Business.Abstracts;
+using Core.Exceptions.Types;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Entities.DTOs.Brand;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,19 +20,46 @@ namespace Business.Concretes
             _brandRepository = brandRepository;
         }
 
-        public void Add(Brand brand)
+        public void Add(BrandForAddDto brandForAddDto)
         {
-            throw new NotImplementedException();
+            // Mapping
+            brandWithSameNameShouldNotExist(brandForAddDto.Name);
+
+            Brand brand = new Brand()
+            {
+                Name = brandForAddDto.Name,
+                LogoUrl = brandForAddDto.LogoUrl,
+                CreatedDate = DateTime.UtcNow,
+                DeletedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow,
+            };
+            _brandRepository.Add(brand);
+        }
+
+        private void brandWithSameNameShouldNotExist(string name)
+        {
+            Brand brandWithSameName = _brandRepository.GetByName(name);
+            if (brandWithSameName != null)
+                throw new BusinessException("Bu isimle bir marka zaten  var.");
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Brand brandToDelete = _brandRepository.GetById(id);
+            brandShouldNotBeNull(brandToDelete);
+            _brandRepository.Delete(id);
         }
 
-        public List<Brand> GetAll()
+        public List<BrandForListingDto> GetAll()
         {
-            return _brandRepository.GetAll();
+            List<Brand> brands = _brandRepository.GetAll();
+            List<BrandForListingDto> dtos = brands.Select(i => new BrandForListingDto()
+            {
+                Id=i.Id,
+                Name=i.Name,
+                LogoUrl=i.LogoUrl,
+            }).ToList();
+            return dtos;
         }
 
         public Brand GetById(int id)
@@ -38,9 +67,24 @@ namespace Business.Concretes
             return _brandRepository.GetById(id);
         }
 
-        public void Update(Brand brand)
+        public void Update(BrandForUpdateDto brandForUpdateDto)
         {
-            throw new NotImplementedException();
+
+            Brand brand = _brandRepository.GetById(brandForUpdateDto.Id);
+            brandShouldNotBeNull(brand);
+            brandWithSameNameShouldNotExist(brandForUpdateDto.Name);
+
+            brand.Name = brandForUpdateDto.Name;
+            brand.LogoUrl = brandForUpdateDto.LogoUrl;
+            brand.UpdatedDate = DateTime.UtcNow;
+
+            _brandRepository.Update(brand);
+        }
+
+        private static void brandShouldNotBeNull(Brand brand)
+        {
+            if (brand == null)
+                throw new BusinessException("Bu id ile bir marka bulunamadı.");
         }
     }
 }

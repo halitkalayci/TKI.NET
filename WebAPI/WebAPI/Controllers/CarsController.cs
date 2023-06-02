@@ -43,6 +43,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] CarForAddDto carForAddDto)
         {
+            var model = ModelState;
             _carService.Add(carForAddDto);
             return Ok();
         }

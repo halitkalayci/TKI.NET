@@ -29,7 +29,6 @@
 using Business.Abstracts;
 using Business.Concretes;
 using DataAccess.Concretes.EntityFramework;
-using DataAccess.Concretes.InMemory;
 using Entities.Concretes;
 
 IBrandService brandService = new BrandManager(null);

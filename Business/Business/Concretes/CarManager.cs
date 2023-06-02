@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
+using Business.ValidationResolvers.Car;
 using Core.Exceptions.Types;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -22,6 +23,10 @@ namespace Business.Concretes
 
         public void Add(CarForAddDto carForAddDto)
         {
+            AddCarDtoValidator validator = new AddCarDtoValidator();
+            var validationResult = validator.Validate(carForAddDto);
+            if (!validationResult.IsValid)
+                throw new Exception("Validasyon hatası.");
             #region Business Rules
             // Veritabanımda halihazırda mevcut bir plaka ile
             // istek gelirse bu istek kabul edilmesin.

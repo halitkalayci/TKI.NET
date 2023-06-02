@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Business
         {
             var assembly = Assembly.GetExecutingAssembly();
             services.AddAutoMapper(assembly);
+            services.AddFluentValidation();
             return services;
         }
     }

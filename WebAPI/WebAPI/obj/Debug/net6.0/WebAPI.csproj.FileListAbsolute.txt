@@ -96,3 +96,6 @@ C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Business.pdb
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll

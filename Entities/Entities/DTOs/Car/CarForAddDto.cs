@@ -1,9 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
+// SOLID => 5 adet prensip
+// S => Single Responsibility Principle
+// O => Open-Closed Principle
+// L => Liskov Substition Principle
+// I => Interface Segregation Principle
+// D => Dependency Inversion Principle
+
+
+// FluentValidation
 namespace Entities.DTOs.Car
 {
     public class CarForAddDto
@@ -15,5 +20,7 @@ namespace Entities.DTOs.Car
         public bool IsAutomatic { get; set; }
         public int ColorId { get; set; }
         public int ModelId { get; set; }
+
+        
     }
 }

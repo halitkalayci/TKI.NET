@@ -1,4 +1,5 @@
-﻿using Business.Abstracts;
+﻿using AutoMapper;
+using Business.Abstracts;
 using Core.Exceptions.Types;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -11,10 +12,12 @@ namespace Business.Concretes
     public class CarManager : ICarService
     {
         private readonly ICarRepository _carRepository;
+        private readonly IMapper _mapper;
 
-        public CarManager(ICarRepository carRepository)
+        public CarManager(ICarRepository carRepository, IMapper mapper)
         {
             _carRepository = carRepository;
+            _mapper = mapper;
         }
 
         public void Add(CarForAddDto carForAddDto)
@@ -25,19 +28,23 @@ namespace Business.Concretes
             carWithSamePlateShouldNotExist(carForAddDto.Plate);
             #endregion
             #region Manual Mapping
-            Car car = new Car()
-            {
-                Plate = carForAddDto.Plate,
-                Kilometer = carForAddDto.Kilometer,
-                IsAutomatic = carForAddDto.IsAutomatic,
-                ColorId = carForAddDto.ColorId,
-                ModelId = carForAddDto.ModelId,
-                MinFindeksCreditRate = carForAddDto.MinFindeksCreditRate,
-                ModelYear = carForAddDto.ModelYear,
-                CreatedDate = DateTime.UtcNow,
-                UpdatedDate = DateTime.UtcNow,
-                DeletedDate = DateTime.UtcNow,
-            };
+            //Car car = new Car()
+            //{
+            //    Plate = carForAddDto.Plate,
+            //    Kilometer = carForAddDto.Kilometer,
+            //    IsAutomatic = carForAddDto.IsAutomatic,
+            //    ColorId = carForAddDto.ColorId,
+            //    ModelId = carForAddDto.ModelId,
+            //    MinFindeksCreditRate = carForAddDto.MinFindeksCreditRate,
+            //    ModelYear = carForAddDto.ModelYear,
+            //    CreatedDate = DateTime.UtcNow,
+            //    UpdatedDate = DateTime.UtcNow,
+            //    DeletedDate = DateTime.UtcNow,
+            //};
+            #endregion
+
+            #region Auto Mapping
+            Car car = _mapper.Map<Car>(carForAddDto);
             #endregion
             _carRepository.Add(car);
         }

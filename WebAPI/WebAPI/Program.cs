@@ -7,6 +7,7 @@ using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
 using DataAccess.Concretes.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.AddSingleton<ICarRepository, EfCarRepository>();
 builder.Services.AddSingleton<ICarService, CarManager>();
 builder.Services.AddSingleton<IBrandService, BrandManager>();
 builder.Services.AddSingleton<IBrandRepository, EfBrandRepository>();
+// Reflection
+builder.Services.AddBusinessServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -60,21 +60,25 @@ namespace Business.Concretes
 
         public List<CarForListingDto> GetAll()
         {
-            // 
             List<Car> cars = _carRepository.GetAll(include: i=>i.Include(i=>i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));
-            List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()
-            {
-                Id = car.Id,
-                Plate = car.Plate,
-                Kilometer = car.Kilometer,
-                MinFindeksCreditRate = car.MinFindeksCreditRate,
-                ModelYear = car.ModelYear,
-                Color = new ColorForListingDto()
-                {
-                    Id = car.Color.Id,
-                    Name = car.Color.Name,
-                }
-            }).ToList();
+            #region Manual Mapping
+            //List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()
+            //{
+            //    Id = car.Id,
+            //    Plate = car.Plate,
+            //    Kilometer = car.Kilometer,
+            //    MinFindeksCreditRate = car.MinFindeksCreditRate,
+            //    ModelYear = car.ModelYear,
+            //    Color = new ColorForListingDto()
+            //    {
+            //        Id = car.Color.Id,
+            //        Name = car.Color.Name,
+            //    }
+            //}).ToList();
+            #endregion
+            #region Auto Mapping
+            List<CarForListingDto> dtos = _mapper.Map<List<CarForListingDto>>(cars);
+            #endregion
             return dtos;
         }
 
@@ -92,14 +96,7 @@ namespace Business.Concretes
             carWithSamePlateShouldNotExist(carForUpdateDto.Plate);
 
             Car carToUpdate = _carRepository.Get(i=>i.Id == carForUpdateDto.Id);
-            carToUpdate.Plate = carForUpdateDto.Plate;
-            carToUpdate.Kilometer = carForUpdateDto.Kilometer;
-            carToUpdate.ColorId = carForUpdateDto.ColorId;
-            carToUpdate.IsAutomatic = carForUpdateDto.IsAutomatic;
-            carToUpdate.ModelId = carForUpdateDto.ModelId;
-            carToUpdate.MinFindeksCreditRate = carForUpdateDto.MinFindeksCreditRate;
-            carToUpdate.ModelYear = carForUpdateDto.ModelYear;
-            carToUpdate.UpdatedDate = DateTime.UtcNow;
+            carToUpdate = _mapper.Map<Car>(carForUpdateDto);
 
             _carRepository.Update(carToUpdate);
         }

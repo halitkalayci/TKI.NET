@@ -4,6 +4,7 @@ using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
 using Entities.DTOs.Car;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes
 {
@@ -45,13 +46,15 @@ namespace Business.Concretes
         {
             // Verilen id ile veritabanına bir eşleşme olması.
             carWithIdShouldExist(id);
-            _carRepository.Delete(id);
+            Car carToDelete = _carRepository.Get(i => i.Id == id);
+            _carRepository.Delete(carToDelete);
         }
 
 
         public List<CarForListingDto> GetAll()
         {
-            List<Car> cars = _carRepository.GetAll();
+            // 
+            List<Car> cars = _carRepository.GetAll(include: i=>i.Include(i=>i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));
             List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()
             {
                 Id = car.Id,
@@ -71,7 +74,8 @@ namespace Business.Concretes
         public Car GetById(int id)
         {
             //TODO: DTO Implementation.
-            return _carRepository.GetById(id);
+            return _carRepository
+                .Get(filter: i=>i.Id == id, include: i=>i.Include(i=>i.Color));
         }
 
         public void Update(CarForUpdateDto carForUpdateDto)
@@ -80,7 +84,7 @@ namespace Business.Concretes
             //TODO => Plaka değiştiyse plakayı kontrol et
             carWithSamePlateShouldNotExist(carForUpdateDto.Plate);
 
-            Car carToUpdate = _carRepository.GetById(carForUpdateDto.Id);
+            Car carToUpdate = _carRepository.Get(i=>i.Id == carForUpdateDto.Id);
             carToUpdate.Plate = carForUpdateDto.Plate;
             carToUpdate.Kilometer = carForUpdateDto.Kilometer;
             carToUpdate.ColorId = carForUpdateDto.ColorId;
@@ -97,7 +101,7 @@ namespace Business.Concretes
 
         private void carWithSamePlateShouldNotExist(string plate)
         {
-            Car carWithSamePlate = _carRepository.GetByPlate(plate);
+            Car carWithSamePlate = _carRepository.Get(i=>i.Plate == plate);
             if (carWithSamePlate != null)
             {
                 throw new Exception("Bu plaka ile bir araç zaten mevcut.");
@@ -106,7 +110,7 @@ namespace Business.Concretes
 
         private void carWithIdShouldExist(int id)
         {
-            Car carToDelete = _carRepository.GetById(id);
+            Car carToDelete = _carRepository.Get(i=>i.Id == id);
             if (carToDelete == null)
                 throw new BusinessException("Bu id ile bir araç bulunamadı.");
         }

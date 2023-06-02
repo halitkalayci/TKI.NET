@@ -38,16 +38,17 @@ namespace Business.Concretes
 
         private void brandWithSameNameShouldNotExist(string name)
         {
-            Brand brandWithSameName = _brandRepository.GetByName(name);
+            // İsme göre sorgulama ihtiyacı
+            Brand brandWithSameName = _brandRepository.Get(i=>i.Name == name);
             if (brandWithSameName != null)
                 throw new BusinessException("Bu isimle bir marka zaten  var.");
         }
 
         public void Delete(int id)
         {
-            Brand brandToDelete = _brandRepository.GetById(id);
+            Brand brandToDelete = _brandRepository.Get(brand=>brand.Id == id);
             brandShouldNotBeNull(brandToDelete);
-            _brandRepository.Delete(id);
+            _brandRepository.Delete(brandToDelete);
         }
 
         public List<BrandForListingDto> GetAll()
@@ -64,13 +65,13 @@ namespace Business.Concretes
 
         public Brand GetById(int id)
         {
-            return _brandRepository.GetById(id);
+            return _brandRepository.Get(i=>i.Id==id);
         }
 
         public void Update(BrandForUpdateDto brandForUpdateDto)
         {
 
-            Brand brand = _brandRepository.GetById(brandForUpdateDto.Id);
+            Brand brand = _brandRepository.Get(i=>i.Id == brandForUpdateDto.Id);
             brandShouldNotBeNull(brand);
             brandWithSameNameShouldNotExist(brandForUpdateDto.Name);
 

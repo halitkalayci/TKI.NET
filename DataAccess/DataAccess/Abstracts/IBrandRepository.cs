@@ -10,6 +10,5 @@ namespace DataAccess.Abstracts
 {
     public interface IBrandRepository : IRepository<Brand>
     {
-        Brand GetByName(string name);
     }
 }

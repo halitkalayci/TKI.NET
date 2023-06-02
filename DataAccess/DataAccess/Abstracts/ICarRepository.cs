@@ -11,6 +11,5 @@ namespace DataAccess.Abstracts
     // I {entity_name} repository
     public interface ICarRepository : IRepository<Car>
     {
-        Car GetByPlate(string plate);
     }
 }

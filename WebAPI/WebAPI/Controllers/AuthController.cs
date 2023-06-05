@@ -28,5 +28,16 @@ namespace WebAPI.Controllers
         {
             return Ok(_authService.Register(email, password));
         }
+        [HttpPost("request-reset-password")]
+        public IActionResult RequestResetPassword(string email) 
+        {
+            return Ok(_authService.RequestResetPassword(email));
+        }
+
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword(string email,string token, string newPassword)
+        {
+            return Ok(_authService.ResetPassword(email, token, newPassword));
+        }
     }
 }

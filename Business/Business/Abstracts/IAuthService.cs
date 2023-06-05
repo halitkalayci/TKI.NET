@@ -11,5 +11,8 @@ namespace Business.Abstracts
     {
         IResult Login(string email, string password);
         IResult Register(string email, string password);
+
+        IResult RequestResetPassword(string email);
+        IResult ResetPassword(string email, string token, string newPassword);
     }
 }

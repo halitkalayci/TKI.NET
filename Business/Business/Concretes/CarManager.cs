@@ -54,7 +54,7 @@ namespace Business.Concretes
             Car car = _mapper.Map<Car>(carForAddDto);
             #endregion
             _carRepository.Add(car);
-            return new Result(true, "Araba başarıyla eklendi.");
+            return new SuccessResult("Araba başarıyla eklendi.");
         }
 
         public void Delete(int id)
@@ -66,7 +66,7 @@ namespace Business.Concretes
         }
 
 
-        public List<CarForListingDto> GetAll()
+        public IDataResult<List<CarForListingDto>> GetAll()
         {
             List<Car> cars = _carRepository.GetAll(include: i => i.Include(i => i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));
             #region Manual Mapping
@@ -87,7 +87,7 @@ namespace Business.Concretes
             #region Auto Mapping
             List<CarForListingDto> dtos = _mapper.Map<List<CarForListingDto>>(cars);
             #endregion
-            return dtos;
+            return new SuccessDataResult<List<CarForListingDto>>(dtos, "Arabalar listelendi");
         }
 
         public Car GetById(int id)

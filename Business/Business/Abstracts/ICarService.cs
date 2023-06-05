@@ -6,7 +6,7 @@ namespace Business.Abstracts
 {
     public interface ICarService
     {
-        List<CarForListingDto> GetAll();
+        IDataResult<List<CarForListingDto>> GetAll();
         Car GetById(int id);
         IResult Add(CarForAddDto car);
         void Update(CarForUpdateDto car);

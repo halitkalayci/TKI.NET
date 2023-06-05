@@ -28,7 +28,7 @@ namespace Business.Concretes
             var validationResult = validator.Validate(carForAddDto);
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors.Select(i=>i.ErrorMessage).ToList(),"Validasyon hatası.");
-            // [ {ErrorMessage:"deneme 1", Code:400}, {ErrorMessage:"deneme", Code:400}, {ErrorMessage:"deneme 3", Code:400}   ] 
+            // [ {ErrorMessage:"deneme 1", Code:400}, {ErrorMessage:"deneme", Code:400}, {ErrorMessage:"deneme 3", Code:400} ] 
             // ["deneme 1","deneme", "deneme 3"]
             #region Business Rules
             // Veritabanımda halihazırda mevcut bir plaka ile

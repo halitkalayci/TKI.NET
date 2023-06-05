@@ -23,6 +23,8 @@ builder.Services.AddSingleton<ICarRepository, EfCarRepository>();
 builder.Services.AddSingleton<ICarService, CarManager>();
 builder.Services.AddSingleton<IBrandService, BrandManager>();
 builder.Services.AddSingleton<IBrandRepository, EfBrandRepository>();
+builder.Services.AddSingleton<IAuthService, AuthManager>();
+builder.Services.AddSingleton<IUserRepository, EfUserRepository>();
 // Reflection
 builder.Services.AddBusinessServices();
 var app = builder.Build();

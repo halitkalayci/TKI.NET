@@ -1,4 +1,5 @@
-﻿using Entities.Concretes;
+﻿using Business.Abstracts;
+using Entities.Concretes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,39 +11,23 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        // GET => Kaynaktan okuma
-        // POST => Kaynakta veri oluşturma
-        // PUT => Kaynakta veri değiştirme
-        // DELETE => Kaynakta veri silme
+        private readonly IAuthService _authService;
 
-
-        [HttpGet("{name}/{surname}")]
-        // Query String, Path Variable
-        // https://localhost:44303/api/Auth?name=halit&surname=kalayci
-        // https://localhost:44303/api/Auth/halit/kalayci
-        public string Example([FromRoute(Name = "name")] string name, [FromRoute] string surname)
+        public AuthController(IAuthService authService)
         {
-            return "Merhaba " + name + " " + surname;
+            _authService = authService;
         }
 
-        [HttpPost]
-        // Araba eklerken isteyeceğim veri seti
-        public string Example2()
+        [HttpPost("login")]
+        public IActionResult Login(string email, string password)
         {
-            return "POST Request atıldı.";
+            _authService.Login(email, password);
+            return Ok();
         }
-
-        [HttpPut]
-        public string Example3()
+        [HttpPost("register")]
+        public IActionResult Register(string email, string password)
         {
-            return "PUT Request atıldı.";
-        }
-
-
-        [HttpDelete]
-        public string Example4()
-        {
-            return "Delete Request atıldı.";
+            return Ok(_authService.Register(email, password));
         }
     }
 }

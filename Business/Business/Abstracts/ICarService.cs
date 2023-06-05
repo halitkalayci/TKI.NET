@@ -1,4 +1,5 @@
-﻿using Entities.Concretes;
+﻿using Core.Utilities.Result;
+using Entities.Concretes;
 using Entities.DTOs.Car;
 
 namespace Business.Abstracts
@@ -7,7 +8,7 @@ namespace Business.Abstracts
     {
         List<CarForListingDto> GetAll();
         Car GetById(int id);
-        void Add(CarForAddDto car);
+        IResult Add(CarForAddDto car);
         void Update(CarForUpdateDto car);
         void Delete(int id);
     }

@@ -40,8 +40,25 @@ namespace Core.Exceptions
             // e.GetType () == typeof(BusinessException)
             if (e is BusinessException) // C# 6.0 
                 await HandleBusinessException(context, e);
+            else if (e is ValidationException) // typeof(e) == typeof(ValidationException)
+                await HandleValidationException(context, e);
             else
                 await HandleUnknownException(context, e);
+        }
+
+        /// Polymorphism
+        private Task HandleValidationException(HttpContext context, Exception e)
+        {
+            // Casting => Dönüştürme
+            //ValidationException validationException = e as ValidationException;
+            ValidationException validationException = (ValidationException)e;
+
+
+            return context.Response.WriteAsync(new ErrorDetails()
+            {
+                Message=validationException.Errors,
+                StatusCode=400
+            }.ToString());
         }
 
         private Task HandleUnknownException(HttpContext context, Exception e)

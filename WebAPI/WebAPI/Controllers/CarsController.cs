@@ -43,9 +43,8 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] CarForAddDto carForAddDto)
         {
-            var model = ModelState;
-            _carService.Add(carForAddDto);
-            return Ok();
+            var result = _carService.Add(carForAddDto);
+            return Ok(result);
         }
 
         [HttpPut]

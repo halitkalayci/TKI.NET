@@ -2,6 +2,7 @@
 using Business.Abstracts;
 using Business.ValidationResolvers.Car;
 using Core.Exceptions.Types;
+using Core.Utilities.Result;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
@@ -21,12 +22,14 @@ namespace Business.Concretes
             _mapper = mapper;
         }
 
-        public void Add(CarForAddDto carForAddDto)
+        public IResult Add(CarForAddDto carForAddDto)
         {
             AddCarDtoValidator validator = new AddCarDtoValidator();
             var validationResult = validator.Validate(carForAddDto);
             if (!validationResult.IsValid)
-                throw new Exception("Validasyon hatası.");
+                throw new ValidationException(validationResult.Errors.Select(i=>i.ErrorMessage).ToList(),"Validasyon hatası.");
+            // [ {ErrorMessage:"deneme 1", Code:400}, {ErrorMessage:"deneme", Code:400}, {ErrorMessage:"deneme 3", Code:400}   ] 
+            // ["deneme 1","deneme", "deneme 3"]
             #region Business Rules
             // Veritabanımda halihazırda mevcut bir plaka ile
             // istek gelirse bu istek kabul edilmesin.
@@ -47,11 +50,11 @@ namespace Business.Concretes
             //    DeletedDate = DateTime.UtcNow,
             //};
             #endregion
-
             #region Auto Mapping
             Car car = _mapper.Map<Car>(carForAddDto);
             #endregion
             _carRepository.Add(car);
+            return new Result(true, "Araba başarıyla eklendi.");
         }
 
         public void Delete(int id)
@@ -65,7 +68,7 @@ namespace Business.Concretes
 
         public List<CarForListingDto> GetAll()
         {
-            List<Car> cars = _carRepository.GetAll(include: i=>i.Include(i=>i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));
+            List<Car> cars = _carRepository.GetAll(include: i => i.Include(i => i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));
             #region Manual Mapping
             //List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()
             //{
@@ -91,7 +94,7 @@ namespace Business.Concretes
         {
             //TODO: DTO Implementation.
             return _carRepository
-                .Get(filter: i=>i.Id == id, include: i=>i.Include(i=>i.Color));
+                .Get(filter: i => i.Id == id, include: i => i.Include(i => i.Color));
         }
 
         public void Update(CarForUpdateDto carForUpdateDto)
@@ -100,7 +103,7 @@ namespace Business.Concretes
             //TODO => Plaka değiştiyse plakayı kontrol et
             carWithSamePlateShouldNotExist(carForUpdateDto.Plate);
 
-            Car carToUpdate = _carRepository.Get(i=>i.Id == carForUpdateDto.Id);
+            Car carToUpdate = _carRepository.Get(i => i.Id == carForUpdateDto.Id);
             carToUpdate = _mapper.Map<Car>(carForUpdateDto);
 
             _carRepository.Update(carToUpdate);
@@ -110,7 +113,7 @@ namespace Business.Concretes
 
         private void carWithSamePlateShouldNotExist(string plate)
         {
-            Car carWithSamePlate = _carRepository.Get(i=>i.Plate == plate);
+            Car carWithSamePlate = _carRepository.Get(i => i.Plate == plate);
             if (carWithSamePlate != null)
             {
                 throw new Exception("Bu plaka ile bir araç zaten mevcut.");
@@ -119,7 +122,7 @@ namespace Business.Concretes
 
         private void carWithIdShouldExist(int id)
         {
-            Car carToDelete = _carRepository.Get(i=>i.Id == id);
+            Car carToDelete = _carRepository.Get(i => i.Id == id);
             if (carToDelete == null)
                 throw new BusinessException("Bu id ile bir araç bulunamadı.");
         }

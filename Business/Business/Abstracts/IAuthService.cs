@@ -1,4 +1,5 @@
 ﻿using Core.Utilities.Result;
+using Core.Utilities.Security.Jwt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Business.Abstracts
 {
     public interface IAuthService
     {
-        IResult Login(string email, string password);
+        IDataResult<AccessToken> Login(string email, string password);
         IResult Register(string email, string password);
 
         IResult RequestResetPassword(string email);

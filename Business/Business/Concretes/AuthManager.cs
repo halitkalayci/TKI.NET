@@ -3,6 +3,7 @@ using Core.Entities.Concretes;
 using Core.Exceptions.Types;
 using Core.Utilities.Result;
 using Core.Utilities.Security.Hashing;
+using Core.Utilities.Security.Jwt;
 using DataAccess.Abstracts;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,14 @@ namespace Business.Concretes
     public class AuthManager : IAuthService
     {
         private readonly IUserRepository _userRepository;
-
-        public AuthManager(IUserRepository userRepository)
+        private readonly ITokenHelper _tokenHelper;
+        public AuthManager(IUserRepository userRepository, ITokenHelper tokenHelper)
         {
             _userRepository = userRepository;
+            _tokenHelper = tokenHelper;
         }
 
-        public IResult Login(string email, string password)
+        public IDataResult<AccessToken> Login(string email, string password)
         {
             User user = _userRepository.Get(i => i.Email == email);
             userShouldNotBeNull(user);
@@ -30,8 +32,10 @@ namespace Business.Concretes
             // HMACSHA512 salt ile kullanıldığında
             // password şifrelendiğinde kullanıcının HASH'i ile uyuşuyor mu?
             if (!HashingHelper.VerifyPasswordHash(password, user.PasswordSalt, user.PasswordHash))
-                return new ErrorResult("Şifre yanlış.");
-            return new SuccessResult("Giriş başarılı.");
+                return new ErrorDataResult<AccessToken>(null);
+
+            var token = _tokenHelper.CreateToken(user);
+            return new SuccessDataResult<AccessToken>(token);
         }
 
         private static void userShouldNotBeNull(User user)

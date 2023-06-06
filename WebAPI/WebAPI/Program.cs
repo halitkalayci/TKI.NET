@@ -3,6 +3,7 @@ using Business.Abstracts;
 using Business.Concretes;
 using Core.Exceptions;
 using Core.Extensions;
+using Core.Utilities.Security.Jwt;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
 using DataAccess.Concretes.EntityFramework.Contexts;
@@ -33,6 +34,7 @@ builder.Services.AddTransient<IBrandService, BrandManager>();
 builder.Services.AddTransient<IBrandRepository, EfBrandRepository>();
 builder.Services.AddTransient<IAuthService, AuthManager>();
 builder.Services.AddTransient<IUserRepository, EfUserRepository>();
+builder.Services.AddSingleton<ITokenHelper, JwtTokenHelper>();
 // Reflection
 builder.Services.AddBusinessServices();
 var app = builder.Build();

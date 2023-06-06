@@ -7,11 +7,14 @@ using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
 using Entities.DTOs.Car;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes
 {
+    // AOP => Aspect Oriented Programming
+
     public class CarManager : ICarService
     {
         private readonly ICarRepository _carRepository;
@@ -27,6 +30,8 @@ namespace Business.Concretes
 
         public Core.Utilities.Result.IResult Add(CarForAddDto carForAddDto)
         {
+            if (!_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                throw new AuthorizeException();
             AddCarDtoValidator validator = new AddCarDtoValidator();
             var validationResult = validator.Validate(carForAddDto);
             if (!validationResult.IsValid)
@@ -62,6 +67,8 @@ namespace Business.Concretes
 
         public void Delete(int id)
         {
+            if (!_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                throw new AuthorizeException();
             // Verilen id ile veritabanına bir eşleşme olması.
             carWithIdShouldExist(id);
             Car carToDelete = _carRepository.Get(i => i.Id == id);
@@ -108,6 +115,8 @@ namespace Business.Concretes
 
         public void Update(CarForUpdateDto carForUpdateDto)
         {
+            if (!_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                throw new AuthorizeException();
             carWithIdShouldExist(carForUpdateDto.Id);
             //TODO => Plaka değiştiyse plakayı kontrol et
             carWithSamePlateShouldNotExist(carForUpdateDto.Plate);

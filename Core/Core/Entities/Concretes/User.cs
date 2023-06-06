@@ -18,8 +18,8 @@ namespace Core.Entities.Concretes
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public byte[] ForgetPasswordHash { get; set; }
-        public byte[] ForgetPasswordSalt { get; set; }
-        public DateTime ForgetPasswordExpireTime { get; set; }
+        public byte[]? ForgetPasswordHash { get; set; }
+        public byte[]? ForgetPasswordSalt { get; set; }
+        public DateTime? ForgetPasswordExpireTime { get; set; }
     }
 }

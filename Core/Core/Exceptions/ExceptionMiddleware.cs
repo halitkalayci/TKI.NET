@@ -1,5 +1,7 @@
 ﻿using Core.Exceptions.Types;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+using ValidationException = Core.Exceptions.Types.ValidationException;
 
 namespace Core.Exceptions
 {
@@ -42,8 +44,20 @@ namespace Core.Exceptions
                 await HandleBusinessException(context, e);
             else if (e is ValidationException) // typeof(e) == typeof(ValidationException)
                 await HandleValidationException(context, e);
+            else if (e is AuthorizeException)
+                await HandleAuthorizeException(context, e);
             else
                 await HandleUnknownException(context, e);
+        }
+
+        private Task HandleAuthorizeException(HttpContext context, Exception e)
+        {
+            context.Response.StatusCode = 401;
+            return context.Response.WriteAsync(new ErrorDetails()
+            {
+                Message = "You are not authorized",
+                StatusCode = 401
+            }.ToString());
         }
 
         /// Polymorphism

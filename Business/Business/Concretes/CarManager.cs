@@ -71,6 +71,12 @@ namespace Business.Concretes
 
         public IDataResult<List<CarForListingDto>> GetAll()
         {
+            // Kullanıcı giriş yapmış mı?
+            var isUserLoggedIn = _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+
+            if (!isUserLoggedIn)
+                throw new Exception("Giriş yapılmadı.");
+
             List<Car> cars = _carRepository.GetAll(include: i => i.Include(i => i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));
             #region Manual Mapping
             //List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()

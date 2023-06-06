@@ -10,6 +10,7 @@ using DataAccess.Concretes.EntityFramework.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 
@@ -23,7 +24,30 @@ builder.Services.AddControllers();
 // { type:IUserRepository, concreteType:EfUserRepository }
 var connectionString = builder.Configuration.GetConnectionString("TKI");
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opt =>
+{
+    opt.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "JWT Authorization"
+    });
+
+    opt.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
+    {
+        { new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type=ReferenceType.SecurityScheme,
+                Id="Bearer"
+            }
+        }, new string[] { } }
+    });
+});
 
 #region Services
 // TODO : Read from appsettings.
@@ -76,11 +100,11 @@ app.UseSwaggerUI();
 app.AddMiddlewaresFromCore();
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
-
 app.MapControllers();
-
 app.UseAuthorization();
+
 app.Run();
 
 

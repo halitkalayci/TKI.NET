@@ -7,6 +7,7 @@ using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
 using Entities.DTOs.Car;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes
@@ -15,14 +16,16 @@ namespace Business.Concretes
     {
         private readonly ICarRepository _carRepository;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CarManager(ICarRepository carRepository, IMapper mapper)
+        public CarManager(ICarRepository carRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _carRepository = carRepository;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public IResult Add(CarForAddDto carForAddDto)
+        public Core.Utilities.Result.IResult Add(CarForAddDto carForAddDto)
         {
             AddCarDtoValidator validator = new AddCarDtoValidator();
             var validationResult = validator.Validate(carForAddDto);

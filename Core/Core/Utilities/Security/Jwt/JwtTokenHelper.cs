@@ -15,7 +15,14 @@ namespace Core.Utilities.Security.Jwt
         public JwtTokenHelper(IConfiguration configuration)
         {
             _configuration = configuration;
-            _tokenOptions = _configuration.GetSection("TokenOptions") as TokenOptions;
+            var tokenOptions = _configuration.GetSection("TokenOptions");
+            _tokenOptions = new TokenOptions()
+            {
+                Issuer= tokenOptions["Issuer"],
+                AccessTokenExpiration= int.Parse(tokenOptions["AccessTokenExpiration"]),
+                SecurityKey = tokenOptions["SecurityKey"],
+                Audience = tokenOptions["Audience"]
+            };
         }
 
 
@@ -50,6 +57,7 @@ namespace Core.Utilities.Security.Jwt
         {
             var claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.Email, user.Email));
             return claims;
         }
     }

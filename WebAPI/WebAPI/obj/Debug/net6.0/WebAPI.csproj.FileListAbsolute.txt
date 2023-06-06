@@ -14,7 +14,6 @@ C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\WebAPI.GeneratedMS
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\WebAPI.AssemblyInfoInputs.cache
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\WebAPI.AssemblyInfo.cs
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\WebAPI.csproj.CoreCompileInputs.cache
-C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\WebAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\WebAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\staticwebassets\msbuild.WebAPI.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.WebAPI.props
@@ -99,3 +98,4 @@ C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\AutoMapper.Extensi
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.dll
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll

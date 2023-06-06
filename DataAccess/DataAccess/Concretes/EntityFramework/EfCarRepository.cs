@@ -13,6 +13,8 @@ namespace DataAccess.Concretes.EntityFramework
 {
     public class EfCarRepository : EfRepositoryBase<Car, BaseDbContext>, ICarRepository
     {
-        
+        public EfCarRepository(BaseDbContext context) : base(context)
+        {
+        }
     }
 }

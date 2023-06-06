@@ -16,15 +16,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 //AppDomain.CurrentDomain.GetAssemblies();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// { type:IUserRepository, concreteType:EfUserRepository }
+var connectionString = builder.Configuration.GetConnectionString("TKI");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// TODO : Read from appsettings.
 builder.Services.AddDbContext<BaseDbContext>();
-builder.Services.AddSingleton<ICarRepository, EfCarRepository>();
-builder.Services.AddSingleton<ICarService, CarManager>();
-builder.Services.AddSingleton<IBrandService, BrandManager>();
-builder.Services.AddSingleton<IBrandRepository, EfBrandRepository>();
-builder.Services.AddSingleton<IAuthService, AuthManager>();
-builder.Services.AddSingleton<IUserRepository, EfUserRepository>();
+// Lifetime 
+// EfCarRepository => BaseDbContext
+// Birbiriyle baðlantýlý baðýmlýlýklar ayný veya uyumlu life time ile
+// eklenmelidir.
+// Singleton => Transient 
+builder.Services.AddTransient<ICarRepository, EfCarRepository>();
+builder.Services.AddTransient<ICarService, CarManager>();
+builder.Services.AddTransient<IBrandService, BrandManager>();
+builder.Services.AddTransient<IBrandRepository, EfBrandRepository>();
+builder.Services.AddTransient<IAuthService, AuthManager>();
+builder.Services.AddTransient<IUserRepository, EfUserRepository>();
 // Reflection
 builder.Services.AddBusinessServices();
 var app = builder.Build();

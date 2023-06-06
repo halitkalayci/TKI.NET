@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wRSgNwcXnw4y/TQd5GOfszvfDRbNj0ivPprMDpmcalXJCKj5/p8fND8yu1Ef48gLilSxq81wfhwu16i9IY6Tqg==",
+  "dgSpecHash": "kL/ASxc2htoX/HyggBt2EHfkwxkuP0tsnj+A9OBY4d9Jm7S2vC4eOZdLw5VK5M7J3A5dbVsY8XM3hRONaeqsDw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Asus\\source\\repos\\TKI\\DataAccess\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
@@ -22,6 +22,7 @@
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\7.0.5\\microsoft.entityframeworkcore.tools.7.0.5.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",

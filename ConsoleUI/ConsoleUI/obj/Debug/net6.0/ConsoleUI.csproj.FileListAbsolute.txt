@@ -75,3 +75,4 @@ C:\Users\Asus\source\repos\TKI\ConsoleUI\ConsoleUI\bin\Debug\net6.0\AutoMapper.E
 C:\Users\Asus\source\repos\TKI\ConsoleUI\ConsoleUI\bin\Debug\net6.0\FluentValidation.dll
 C:\Users\Asus\source\repos\TKI\ConsoleUI\ConsoleUI\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 C:\Users\Asus\source\repos\TKI\ConsoleUI\ConsoleUI\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\Asus\source\repos\TKI\ConsoleUI\ConsoleUI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll

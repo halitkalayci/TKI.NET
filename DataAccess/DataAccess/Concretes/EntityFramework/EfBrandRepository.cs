@@ -2,6 +2,7 @@
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework.Contexts;
 using Entities.Concretes;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace DataAccess.Concretes.EntityFramework
 {
     public class EfBrandRepository : EfRepositoryBase<Brand, BaseDbContext>, IBrandRepository
     {
-        
+        public EfBrandRepository(BaseDbContext context) : base(context)
+        {
+        }
     }
 }

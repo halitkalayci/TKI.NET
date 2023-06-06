@@ -99,3 +99,4 @@ C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.d
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\WebAPI.MvcApplicationPartsAssemblyInfo.cs

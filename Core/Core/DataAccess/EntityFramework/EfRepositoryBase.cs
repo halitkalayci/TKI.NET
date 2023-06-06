@@ -13,7 +13,7 @@ namespace Core.DataAccess.EntityFramework
 {
     public class EfRepositoryBase<TEntity, TContext> : IRepository<TEntity>
         where TEntity : class, IEntity, new()
-        where TContext : DbContext, new()
+        where TContext : DbContext
     {
         private TContext Context;
         public EfRepositoryBase(TContext context)

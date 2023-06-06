@@ -12,7 +12,12 @@ namespace DataAccess.Concretes.EntityFramework.Contexts
 {
     public class BaseDbContext : DbContext
     {
-       
+        private IConfiguration _configuration;
+
+        public BaseDbContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Car> Cars { get; set; }
@@ -57,7 +62,7 @@ namespace DataAccess.Concretes.EntityFramework.Contexts
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=RentACarTKI;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("TKI"));
             base.OnConfiguring(optionsBuilder);
         }
     }

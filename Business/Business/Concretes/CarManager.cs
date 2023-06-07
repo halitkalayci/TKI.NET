@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
 using Business.ValidationResolvers.Car;
+using Core.Aspects.Autofac.Authentication;
+using Core.Aspects.Autofac.Validation;
 using Core.Exceptions.Types;
 using Core.Utilities.Result;
 using DataAccess.Abstracts;
@@ -10,6 +12,7 @@ using Entities.DTOs.Car;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using IResult = Core.Utilities.Result.IResult;
 
 namespace Business.Concretes
 {
@@ -28,14 +31,10 @@ namespace Business.Concretes
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Core.Utilities.Result.IResult Add(CarForAddDto carForAddDto)
+        [Authentication]
+        //[Validation(typeof(AddCarDtoValidator))]
+        public IResult Add(CarForAddDto carForAddDto)
         {
-            if (!_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
-                throw new AuthorizeException();
-            AddCarDtoValidator validator = new AddCarDtoValidator();
-            var validationResult = validator.Validate(carForAddDto);
-            if (!validationResult.IsValid)
-                throw new ValidationException(validationResult.Errors.Select(i=>i.ErrorMessage).ToList(),"Validasyon hatası.");
             // [ {ErrorMessage:"deneme 1", Code:400}, {ErrorMessage:"deneme", Code:400}, {ErrorMessage:"deneme 3", Code:400} ] 
             // ["deneme 1","deneme", "deneme 3"]
             #region Business Rules
@@ -76,14 +75,9 @@ namespace Business.Concretes
         }
 
 
+        [Authentication]
         public IDataResult<List<CarForListingDto>> GetAll()
         {
-            // Kullanıcı giriş yapmış mı?
-            var isUserLoggedIn = _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
-
-            if (!isUserLoggedIn)
-                throw new Exception("Giriş yapılmadı.");
-
             List<Car> cars = _carRepository.GetAll(include: i => i.Include(i => i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));
             #region Manual Mapping
             //List<CarForListingDto> dtos = cars.Select(car => new CarForListingDto()

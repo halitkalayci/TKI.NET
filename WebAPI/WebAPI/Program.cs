@@ -4,8 +4,10 @@ using Business;
 using Business.Abstracts;
 using Business.Concretes;
 using Business.DependencyResolvers.Autofac;
+using Core.DependencyResolvers;
 using Core.Exceptions;
 using Core.Extensions;
+using Core.Utilities.IoC;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
@@ -56,6 +58,7 @@ builder.Services.AddSwaggerGen(opt =>
 #region Services
 builder.Services.AddDbContext<BaseDbContext>();
 builder.Services.AddSingleton<ITokenHelper, JwtTokenHelper>();
+builder.Services.AddCoreDependencies(new ICoreModule[] {  new CoreModule()  });
 builder.Services.AddBusinessServices();
 #endregion
 

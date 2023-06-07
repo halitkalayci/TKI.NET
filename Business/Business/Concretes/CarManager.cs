@@ -2,6 +2,7 @@
 using Business.Abstracts;
 using Business.ValidationResolvers.Car;
 using Core.Aspects.Autofac.Authentication;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Exceptions.Types;
 using Core.Utilities.Result;
@@ -33,6 +34,7 @@ namespace Business.Concretes
 
         [Authentication]
         [Validation(typeof(AddCarDtoValidator))]
+        [CacheRemove("ICarService.*")]
         public IResult Add(CarForAddDto carForAddDto)
         {
             // [ {ErrorMessage:"deneme 1", Code:400}, {ErrorMessage:"deneme", Code:400}, {ErrorMessage:"deneme 3", Code:400} ] 
@@ -74,7 +76,7 @@ namespace Business.Concretes
             _carRepository.Delete(carToDelete);
         }
 
-
+        [Cache]
         public IDataResult<List<CarForListingDto>> GetAll()
         {
             List<Car> cars = _carRepository.GetAll(include: i => i.Include(i => i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));

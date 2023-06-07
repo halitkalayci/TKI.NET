@@ -101,3 +101,7 @@ C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\FluentValidation.D
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\obj\Debug\net6.0\WebAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Autofac.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Autofac.Extensions.DependencyInjection.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Autofac.Extras.DynamicProxy.dll
+C:\Users\Asus\source\repos\TKI\WebAPI\WebAPI\bin\Debug\net6.0\Castle.Core.dll

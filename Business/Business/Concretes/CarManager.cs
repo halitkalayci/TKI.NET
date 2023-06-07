@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes
 {
+    // Autofac
     // AOP => Aspect Oriented Programming
-
     public class CarManager : ICarService
     {
         private readonly ICarRepository _carRepository;

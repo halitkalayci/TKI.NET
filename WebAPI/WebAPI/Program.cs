@@ -1,6 +1,9 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Business;
 using Business.Abstracts;
 using Business.Concretes;
+using Business.DependencyResolvers.Autofac;
 using Core.Exceptions;
 using Core.Extensions;
 using Core.Utilities.Security.Jwt;
@@ -15,7 +18,8 @@ using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new BusinessAutofacModule()));
 // Add services to the container.
 // TKI Github deneme
 builder.Services.AddControllers();
@@ -50,19 +54,7 @@ builder.Services.AddSwaggerGen(opt =>
 });
 
 #region Services
-// TODO : Read from appsettings.
-// Lifetime 
-// EfCarRepository => BaseDbContext
-// Birbiriyle baðlantýlý baðýmlýlýklar ayný veya uyumlu life time ile
-// eklenmelidir.
-// Singleton => Transient 
 builder.Services.AddDbContext<BaseDbContext>();
-builder.Services.AddTransient<ICarRepository, EfCarRepository>();
-builder.Services.AddTransient<ICarService, CarManager>();
-builder.Services.AddTransient<IBrandService, BrandManager>();
-builder.Services.AddTransient<IBrandRepository, EfBrandRepository>();
-builder.Services.AddTransient<IAuthService, AuthManager>();
-builder.Services.AddTransient<IUserRepository, EfUserRepository>();
 builder.Services.AddSingleton<ITokenHelper, JwtTokenHelper>();
 builder.Services.AddBusinessServices();
 #endregion

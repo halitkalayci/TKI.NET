@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 // SOLID => 5 adet prensip
 // S => Single Responsibility Principle
 // O => Open-Closed Principle

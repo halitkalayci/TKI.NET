@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Core.Aspects.Autofac.Validation
 {
-    public class ValidationAttribute 
+    public class ValidationAttribute : MethodInterception
     {
         // OnBefore 
         // Validator type?
@@ -24,7 +24,7 @@ namespace Core.Aspects.Autofac.Validation
             _type = type;
         }
 
-        protected void OnBefore(IInvocation invocation)
+        protected override void OnBefore(IInvocation invocation)
         {
             // verilen tipten bir consturctor üret. runtime
             // Runtime'da bir instance üretme

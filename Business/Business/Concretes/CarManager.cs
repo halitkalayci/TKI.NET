@@ -32,7 +32,7 @@ namespace Business.Concretes
         }
 
         [Authentication]
-        //[Validation(typeof(AddCarDtoValidator))]
+        [Validation(typeof(AddCarDtoValidator))]
         public IResult Add(CarForAddDto carForAddDto)
         {
             // [ {ErrorMessage:"deneme 1", Code:400}, {ErrorMessage:"deneme", Code:400}, {ErrorMessage:"deneme 3", Code:400} ] 
@@ -75,7 +75,6 @@ namespace Business.Concretes
         }
 
 
-        [Authentication]
         public IDataResult<List<CarForListingDto>> GetAll()
         {
             List<Car> cars = _carRepository.GetAll(include: i => i.Include(i => i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));

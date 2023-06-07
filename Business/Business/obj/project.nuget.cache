@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "BbtIGq/mn1orzt5qbLKkVKE4SS2G4CG6j9cM0c90Sq16t39H4cyhB161bU6sSIYm22A6LSxocOprpfafVKlldQ==",
+  "dgSpecHash": "VDOxYqgRaFZJBe+4QeMnEMBvIiNfrsSom040CGbJAxkbupLcUZxl03Au7mYzyBz0e6dQUyfZ0ybPKn8y8i30Zw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Asus\\source\\repos\\TKI\\Business\\Business\\Business.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Asus\\.nuget\\packages\\autofac\\7.0.1\\autofac.7.0.1.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\autofac.extensions.dependencyinjection\\8.0.0\\autofac.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\autofac.extras.dynamicproxy\\7.0.0\\autofac.extras.dynamicproxy.7.0.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

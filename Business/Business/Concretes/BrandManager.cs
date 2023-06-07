@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using Core.Aspects.Autofac;
 using Core.Exceptions.Types;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -51,6 +52,7 @@ namespace Business.Concretes
             _brandRepository.Delete(brandToDelete);
         }
 
+        [ExampleAspect]
         public List<BrandForListingDto> GetAll()
         {
             List<Brand> brands = _brandRepository.GetAll();

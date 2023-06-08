@@ -3,6 +3,7 @@ using Business.Abstracts;
 using Business.ValidationResolvers.Car;
 using Core.Aspects.Autofac.Authentication;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Exceptions.Types;
 using Core.Utilities.Result;
@@ -39,6 +40,7 @@ namespace Business.Concretes
         [Authentication("CarAdd")]
         [Validation(typeof(AddCarDtoValidator))]
         [CacheRemove("ICarService.*")]
+        [Transaction]
         public IResult Add(CarForAddDto carForAddDto)
         {
             // [ {ErrorMessage:"deneme 1", Code:400}, {ErrorMessage:"deneme", Code:400}, {ErrorMessage:"deneme 3", Code:400} ] 

@@ -28,7 +28,7 @@ namespace Business.Concretes
         }
 
 
-        [Logging(typeof(FileLogger))]
+        [Logging(typeof(MSSQLLogger))]
         public IDataResult<AccessToken> Login(string email, string password)
         {
             User user = _userRepository
@@ -52,7 +52,7 @@ namespace Business.Concretes
                 throw new BusinessException("User not found");
             }
         }
-        [Logging(typeof(FileLogger))]
+        [Logging(typeof(MSSQLLogger))]
         public IResult Register(string email, string password)
         {
             byte[] passwordHash, passwordSalt;

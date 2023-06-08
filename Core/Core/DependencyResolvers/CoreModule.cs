@@ -20,7 +20,7 @@ namespace Core.DependencyResolvers
 
             services.AddMemoryCache();
             services.AddSingleton<ICachingService, InMemoryCacheManager>();
-            services.AddTransient<LoggerServiceBase, FileLogger>();
+            services.AddTransient<LoggerServiceBase, MSSQLLogger>();
             services.AddSingleton<Stopwatch>();
             services.AddHttpContextAccessor();
         }

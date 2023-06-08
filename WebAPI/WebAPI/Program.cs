@@ -61,7 +61,7 @@ builder.Services.AddDbContext<BaseDbContext>();
 builder.Services.AddSingleton<ITokenHelper, JwtTokenHelper>();
 builder.Services.AddCoreDependencies(new ICoreModule[] {  new CoreModule()  });
 builder.Services.AddBusinessServices();
-builder.Services.AddTransient<FileLogger>();
+builder.Services.AddTransient<MSSQLLogger>();
 #endregion
 
 #region Authentication

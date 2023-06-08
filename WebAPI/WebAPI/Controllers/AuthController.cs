@@ -1,7 +1,10 @@
 ﻿using Business.Abstracts;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Entities.Concretes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace WebAPI.Controllers
 {
@@ -21,6 +24,7 @@ namespace WebAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login(string email, string password)
         {
+          
             return Ok(_authService.Login(email, password));
         }
         [HttpPost("register")]

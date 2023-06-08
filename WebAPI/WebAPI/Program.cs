@@ -4,6 +4,7 @@ using Business;
 using Business.Abstracts;
 using Business.Concretes;
 using Business.DependencyResolvers.Autofac;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.DependencyResolvers;
 using Core.Exceptions;
 using Core.Extensions;
@@ -60,6 +61,7 @@ builder.Services.AddDbContext<BaseDbContext>();
 builder.Services.AddSingleton<ITokenHelper, JwtTokenHelper>();
 builder.Services.AddCoreDependencies(new ICoreModule[] {  new CoreModule()  });
 builder.Services.AddBusinessServices();
+builder.Services.AddTransient<FileLogger>();
 #endregion
 
 #region Authentication

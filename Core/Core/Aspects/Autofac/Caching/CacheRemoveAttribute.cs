@@ -23,8 +23,7 @@ namespace Core.Aspects.Autofac.Caching
 
         protected override void OnSuccess(IInvocation invocation)
         {
-            var s = "ICarService.GetAll";
-            _cachingService.Remove(s);
+            _cachingService.RemoveByPattern(_pattern);
         }
     }
 }

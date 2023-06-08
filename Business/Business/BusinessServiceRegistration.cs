@@ -1,4 +1,6 @@
-﻿using Business.ValidationResolvers.Car;
+﻿using Business.ValidationResolvers.Brand;
+using Business.ValidationResolvers.Car;
+using Entities.DTOs.Brand;
 using Entities.DTOs.Car;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -20,6 +22,8 @@ namespace Business
             services.AddAutoMapper(assembly);
             //services.AddFluentValidation();
             services.AddTransient<IValidator<CarForAddDto>, AddCarDtoValidator>();
+            services.AddTransient<IValidator<BrandForAddDto>, BrandForAddDtoValidator>();
+            services.AddTransient<IValidator<BrandForUpdateDto>, BrandForUpdateDtoValidator>();
             return services;
         }
     }

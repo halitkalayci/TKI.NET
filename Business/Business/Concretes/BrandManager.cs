@@ -1,7 +1,10 @@
 ﻿using Business.Abstracts;
+using Business.ValidationResolvers.Brand;
 using Core.Aspects.Autofac;
 using Core.Aspects.Autofac.Authentication;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Validation;
 using Core.Exceptions.Types;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -23,6 +26,9 @@ namespace Business.Concretes
             _brandRepository = brandRepository;
         }
 
+        [CacheRemove("IBrandService.*")]
+        [Authentication("Brand.Add,Admin")]
+        [Validation(typeof(BrandForAddDtoValidator))]
         public void Add(BrandForAddDto brandForAddDto)
         {
             // Mapping
@@ -39,6 +45,24 @@ namespace Business.Concretes
             _brandRepository.Add(brand);
         }
 
+        [Authentication("Brand.Update,Admin")]
+        [CacheRemove("IBrandService.*")]
+        [Validation(typeof(BrandForUpdateDtoValidator))]
+        public void Update(BrandForUpdateDto brandForUpdateDto)
+        {
+
+            Brand brand = _brandRepository.Get(i => i.Id == brandForUpdateDto.Id);
+            brandShouldNotBeNull(brand);
+            brandWithSameNameShouldNotExist(brandForUpdateDto.Name);
+
+            brand.Name = brandForUpdateDto.Name;
+            brand.LogoUrl = brandForUpdateDto.LogoUrl;
+            brand.UpdatedDate = DateTime.UtcNow;
+
+            _brandRepository.Update(brand);
+        }
+
+
         private void brandWithSameNameShouldNotExist(string name)
         {
             // İsme göre sorgulama ihtiyacı
@@ -47,6 +71,10 @@ namespace Business.Concretes
                 throw new BusinessException("Bu isimle bir marka zaten  var.");
         }
 
+
+
+        [Authentication("Brand.Delete,Admin")]
+        [CacheRemove("IBrandService.*")]
         public void Delete(int id)
         {
             Brand brandToDelete = _brandRepository.Get(brand=>brand.Id == id);
@@ -55,6 +83,7 @@ namespace Business.Concretes
         }
 
         [Performance(1)]
+        [Cache]
         [Authentication]
         public List<BrandForListingDto> GetAll()
         {
@@ -68,25 +97,12 @@ namespace Business.Concretes
             return dtos;
         }
 
+        [Cache]
         public Brand GetById(int id)
         {
             return _brandRepository.Get(i=>i.Id==id);
         }
-
-        public void Update(BrandForUpdateDto brandForUpdateDto)
-        {
-
-            Brand brand = _brandRepository.Get(i=>i.Id == brandForUpdateDto.Id);
-            brandShouldNotBeNull(brand);
-            brandWithSameNameShouldNotExist(brandForUpdateDto.Name);
-
-            brand.Name = brandForUpdateDto.Name;
-            brand.LogoUrl = brandForUpdateDto.LogoUrl;
-            brand.UpdatedDate = DateTime.UtcNow;
-
-            _brandRepository.Update(brand);
-        }
-
+       
         private static void brandShouldNotBeNull(Brand brand)
         {
             if (brand == null)

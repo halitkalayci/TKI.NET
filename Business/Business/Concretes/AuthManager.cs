@@ -5,6 +5,7 @@ using Core.Utilities.Result;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,9 @@ namespace Business.Concretes
 
         public IDataResult<AccessToken> Login(string email, string password)
         {
-            User user = _userRepository.Get(i => i.Email == email);
+            User user = _userRepository
+                .Get(i => i.Email == email, 
+                include: i=>i.Include(i=>i.UserOperationClaims).ThenInclude(i=>i.OperationClaim));
             userShouldNotBeNull(user);
             // Salt'ı al
             // HMACSHA512 salt ile kullanıldığında

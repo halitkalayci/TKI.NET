@@ -27,6 +27,8 @@ namespace DataAccess.Concretes.EntityFramework.Contexts
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Model> Models { get; set; }
         public DbSet<Rental> Rentals { get; set; }
+        public DbSet<OperationClaim> OperationClaims  { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

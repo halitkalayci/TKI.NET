@@ -52,7 +52,6 @@ namespace Core.DataAccess.EntityFramework
         {
             // ternary operator => ?
             // {koşul} ? {true} : {false}
-
             IQueryable<TEntity> queryable = Context.Set<TEntity>();
             if (include != null)
                 queryable = include(queryable);

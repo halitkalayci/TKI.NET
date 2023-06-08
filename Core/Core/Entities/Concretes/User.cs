@@ -15,11 +15,16 @@ namespace Core.Entities.Concretes
     // SHA512 SHA256
     public class User : BaseEntity<int>
     {
+        public User()
+        {
+            UserOperationClaims = new HashSet<UserOperationClaim>();
+        }
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public byte[]? ForgetPasswordHash { get; set; }
         public byte[]? ForgetPasswordSalt { get; set; }
         public DateTime? ForgetPasswordExpireTime { get; set; }
+        public virtual ICollection<UserOperationClaim> UserOperationClaims  { get; set; }
     }
 }

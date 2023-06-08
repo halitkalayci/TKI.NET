@@ -19,6 +19,9 @@ namespace Business.Concretes
 {
     // Autofac
     // AOP => Aspect Oriented Programming
+
+    // Sunucunun RAM'inde cache
+    // RedisDb => Bağımsız => Cache Kalıcı
     public class CarManager : ICarService
     {
         private readonly ICarRepository _carRepository;
@@ -32,7 +35,8 @@ namespace Business.Concretes
             _httpContextAccessor = httpContextAccessor;
         }
 
-        [Authentication]
+
+        [Authentication("CarAdd")]
         [Validation(typeof(AddCarDtoValidator))]
         [CacheRemove("ICarService.*")]
         public IResult Add(CarForAddDto carForAddDto)
@@ -76,7 +80,7 @@ namespace Business.Concretes
             _carRepository.Delete(carToDelete);
         }
 
-        [Cache]
+        [Cache(30)]
         public IDataResult<List<CarForListingDto>> GetAll()
         {
             List<Car> cars = _carRepository.GetAll(include: i => i.Include(i => i.Color).Include(i => i.Model).ThenInclude(i => i.Brand));

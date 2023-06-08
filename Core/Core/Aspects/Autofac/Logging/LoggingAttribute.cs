@@ -19,6 +19,7 @@ namespace Core.Aspects.Autofac.Logging
     {
         private readonly LoggerServiceBase _loggerService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly string[] sensitivePropertyNames = new string[] { "password", "token" };
 
         public LoggingAttribute(Type loggerService)
         {
@@ -40,10 +41,11 @@ namespace Core.Aspects.Autofac.Logging
             List<LogParameter> logParameters = new List<LogParameter>();
             for (int i = 0; i < invocation.Arguments.Length; i++)
             {
+                var parameterName = invocation.GetConcreteMethod().GetParameters()[i].Name;
                 logParameters.Add(new LogParameter()
                 {
-                    Name = invocation.GetConcreteMethod().Name,
-                    Value = invocation.Arguments[i],
+                    Name = parameterName,
+                    Value =  sensitivePropertyNames.Contains(parameterName.ToLower()) ? "******" : invocation.Arguments[i],
                     Type = invocation.Arguments[i].GetType().Name
                 });
             }

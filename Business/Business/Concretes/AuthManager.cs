@@ -1,4 +1,6 @@
 ﻿using Business.Abstracts;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concretes;
 using Core.Exceptions.Types;
 using Core.Utilities.Result;
@@ -25,6 +27,8 @@ namespace Business.Concretes
             _tokenHelper = tokenHelper;
         }
 
+
+        [Logging(typeof(FileLogger))]
         public IDataResult<AccessToken> Login(string email, string password)
         {
             User user = _userRepository
@@ -48,7 +52,7 @@ namespace Business.Concretes
                 throw new BusinessException("User not found");
             }
         }
-
+        [Logging(typeof(FileLogger))]
         public IResult Register(string email, string password)
         {
             byte[] passwordHash, passwordSalt;

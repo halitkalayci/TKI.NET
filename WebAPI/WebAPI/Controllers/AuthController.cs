@@ -24,7 +24,6 @@ namespace WebAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login(string email, string password)
         {
-          
             return Ok(_authService.Login(email, password));
         }
         [HttpPost("register")]

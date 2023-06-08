@@ -1,5 +1,7 @@
 ﻿using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
+using Core.CrossCuttingConcerns.Logging.Serilog;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,8 +20,7 @@ namespace Core.DependencyResolvers
 
             services.AddMemoryCache();
             services.AddSingleton<ICachingService, InMemoryCacheManager>();
-
-
+            services.AddTransient<LoggerServiceBase, FileLogger>();
             services.AddSingleton<Stopwatch>();
             services.AddHttpContextAccessor();
         }

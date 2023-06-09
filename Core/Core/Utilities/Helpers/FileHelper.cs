@@ -21,7 +21,7 @@ namespace Core.Utilities.Helpers
             var base64Header = base64Parts[0];
             var startIndex = base64Header.IndexOf("/");
             var endIndex = base64Header.Contains("+") ? base64Header.IndexOf("+") : base64Header.IndexOf(";");
-            var extension = base64Header.Substring(startIndex + 1, endIndex - startIndex);
+            var extension = base64Header.Substring(startIndex + 1, endIndex - (startIndex + 1));
 
             // unique name
             // BASE64 içinden extension'ı okumak..

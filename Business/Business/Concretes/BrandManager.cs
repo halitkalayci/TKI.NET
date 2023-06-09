@@ -6,6 +6,7 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Exceptions.Types;
+using Core.Utilities.Helpers;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs.Brand;
@@ -32,24 +33,8 @@ namespace Business.Concretes
         [Validation(typeof(BrandForAddDtoValidator))]
         public void Add(BrandForAddDto brandForAddDto)
         {
-            // Mapping
             brandWithSameNameShouldNotExist(brandForAddDto.Name);
-
-
-            // BASE64'ü webapi'nin wwwroot/images klasörüne at, attığın yolu url olarak ver.
-
-            var base64 = Regex.Replace(brandForAddDto.LogoBase64, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
-            byte[] fileBytes = Convert.FromBase64String(base64);
-            // unique name
-            // BASE64 içinden extension'ı okumak..
-            var fileName = Guid.NewGuid().ToString() + ".svg";
-            File.WriteAllBytes(Environment.CurrentDirectory + @"\wwwroot\images\" + fileName, fileBytes);
-
-
-
-            // O anda çalıştığım domaini hesaplayıp klasörü de içerisine dahil edip bir link oluşturma
-            // api.tki.com
-            // 5193412.svg => https://api.tki.com/images/5193412.svg
+            var fileName = FileHelper.UploadFromBase64(brandForAddDto.LogoBase64);
             Brand brand = new Brand()
             {
                 Name = brandForAddDto.Name,

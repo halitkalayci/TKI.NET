@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using Core.Utilities.Helpers;
 using Entities.DTOs.Brand;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,12 @@ namespace WebAPI.Controllers
         {
             _brandService.Add(brandForAddDto);
             return Created("","Marka eklendi");
+        }
+        [HttpPost("upload")]
+        public IActionResult AddImage(IFormFile file)
+        {
+            FileHelper.UploadFromFile(file);
+            return Ok();
         }
         [HttpPut]
         public IActionResult Update([FromBody] BrandForUpdateDto brandForUpdateDto)

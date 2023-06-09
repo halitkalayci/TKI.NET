@@ -101,7 +101,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.MapControllers();
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.Run();
 
 

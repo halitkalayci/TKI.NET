@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Business.Concretes
@@ -34,10 +35,25 @@ namespace Business.Concretes
             // Mapping
             brandWithSameNameShouldNotExist(brandForAddDto.Name);
 
+
+            // BASE64'ü webapi'nin wwwroot/images klasörüne at, attığın yolu url olarak ver.
+
+            var base64 = Regex.Replace(brandForAddDto.LogoBase64, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
+            byte[] fileBytes = Convert.FromBase64String(base64);
+            // unique name
+            // BASE64 içinden extension'ı okumak..
+            var fileName = Guid.NewGuid().ToString() + ".svg";
+            File.WriteAllBytes(Environment.CurrentDirectory + @"\wwwroot\images\" + fileName, fileBytes);
+
+
+
+            // O anda çalıştığım domaini hesaplayıp klasörü de içerisine dahil edip bir link oluşturma
+            // api.tki.com
+            // 5193412.svg => https://api.tki.com/images/5193412.svg
             Brand brand = new Brand()
             {
                 Name = brandForAddDto.Name,
-                LogoUrl = brandForAddDto.LogoUrl,
+                LogoUrl = fileName,
                 CreatedDate = DateTime.UtcNow,
                 DeletedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow,

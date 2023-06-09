@@ -13,7 +13,7 @@ namespace Business.ValidationResolvers.Brand
         public BrandForAddDtoValidator()
         {
             RuleFor(i => i.Name).NotNull().NotEmpty().MinimumLength(3);
-            RuleFor(i=>i.LogoUrl).NotEmpty().NotNull();
+            RuleFor(i=>i.LogoBase64).NotEmpty().NotNull();
         }
     }
 }

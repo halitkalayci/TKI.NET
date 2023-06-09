@@ -30,6 +30,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<EfUserRepository>().As<IUserRepository>().SingleInstance();
 
+            builder.RegisterType<EfCarImageRepository>().As<ICarImageRepository>().SingleInstance();
+            builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
 
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();

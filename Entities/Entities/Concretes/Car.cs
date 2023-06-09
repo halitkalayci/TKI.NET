@@ -31,6 +31,7 @@ namespace Entities.Concretes
         public Car()
         {
             Rentals = new HashSet<Rental>();
+            CarImages = new HashSet<CarImage>();
         }
 
         public string Plate { get; set; }
@@ -44,5 +45,6 @@ namespace Entities.Concretes
     
         public virtual Model Model { get; set; }
         public ICollection<Rental> Rentals { get; set; }
+        public ICollection<CarImage> CarImages { get; set; }
     }
 }
